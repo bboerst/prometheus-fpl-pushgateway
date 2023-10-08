@@ -1,0 +1,30 @@
+# Ignore git and cache directories
+.git
+__pycache__
+
+# Ignore logs and other temporary files
+*.log
+
+# Ignore any compiled Python files
+*.pyc
+*.pyo
+
+# Ignore all secret files
+*.secrets
+*.credentials
+*.key
+
+# Ignore any local configuration files
+*.local
+
+# Ignore any local virtual environment
+venv/
+.env/
+
+# Ignore Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Other typical files/folders to exclude
+.DS_Store
+.idea/
+.vscode/
