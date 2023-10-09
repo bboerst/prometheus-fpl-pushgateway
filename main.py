@@ -415,7 +415,7 @@ class FplPrometheusMetrics:
         self.daily_usage_cost = Gauge('fpl_daily_usage_cost', 'Daily Usage Cost in local currency', registry=registry)
         self.daily_max_temperature = Gauge('fpl_daily_max_temperature', 'Daily Maximum Temperature', registry=registry)
 
-def push_metrics_to_pushgateway(metrics, latest_data):
+def push_metrics_to_pushgateway(metrics, latest_data, registry):
     metrics.daily_usage_kwh.set(latest_data.get('usage', 0))
     metrics.daily_usage_cost.set(latest_data.get('cost', 0))
     metrics.daily_max_temperature.set(latest_data.get('max_temperature', 0))
@@ -448,7 +448,7 @@ async def main(username, password):
                 latest_data = daily_usage[-1]
 
                 # Push the metrics to Prometheus Pushgateway
-                push_metrics_to_pushgateway(metrics, latest_data)
+                push_metrics_to_pushgateway(metrics, latest_data, registry)
                 
                 read_time = latest_data.get("readTime")
                 if read_time:
