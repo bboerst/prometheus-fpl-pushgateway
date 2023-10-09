@@ -3,8 +3,8 @@ image:
   tag: ""
   pullPolicy: IfNotPresent
 
-# 6:00am UTC every day
-schedule: "0 6 * * *"
+# 6:00am EST every day
+schedule: "0 10 * * *"
 
 pushgateway:
   enabled: false
