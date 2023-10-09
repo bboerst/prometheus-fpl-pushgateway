@@ -4,6 +4,8 @@ metadata:
   name: prometheus-fpl-pushgateway
 spec:
   schedule: {{ .Values.schedule }}
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
