@@ -28,6 +28,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: yourdockerusername/yourimage:${{ github.ref }}
+          tags: bboerst/prometheus-fpl-pushgateway:{latest,${{ github.ref }}}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
-
+          build-args: |
+            BUILD_DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+            VCS_REF=${{ github.sha }}
+            VERSION=${{ github.ref }}
