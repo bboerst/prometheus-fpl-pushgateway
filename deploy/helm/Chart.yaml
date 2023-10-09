@@ -1,0 +1,5 @@
+apiVersion: v2
+name: prometheus-fpl-pushgateway
+version: 0.1.0
+appVersion: "v1.0"
+description: A Helm chart to execute a CronJob which retreives daily electricity usage details from Florida Power and Light (FPL) and sends them to a Prometheus Pushgateway

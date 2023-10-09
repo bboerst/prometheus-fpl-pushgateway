@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: prometheus-fpl-pushgateway
+spec:
+  schedule: {{ .Values.schedule }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: prometheus-fpl-pushgateway
+            image: "{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            env:
+            {{- range .Values.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+            - name: FPL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: fpl-credentials
+                  key: username
+            - name: FPL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fpl-credentials
+                  key: password
+            resources:
+            {{- toYaml .Values.resources | nindent 14 }}
+          restartPolicy: OnFailure
