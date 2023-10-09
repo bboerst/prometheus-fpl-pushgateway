@@ -19,6 +19,10 @@ spec:
             - name: {{ .name }}
               value: {{ .value | quote }}
             {{- end }}
+            - name: PUSHGATEWAY_ENABLED
+              value: {{ .Values.pushgateway.enabled | quote }}
+            - name: PUSHGATEWAY_ADDRESS
+              value: {{ .Values.pushgateway.address | quote }}
             - name: FPL_USERNAME
               valueFrom:
                 secretKeyRef:

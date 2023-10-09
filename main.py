@@ -17,6 +17,7 @@ TIMEOUT = 10
 LOGIN_RESULT_OK = "OK"
 LOGIN_RESULT_FAILURE = "FAILURE"
 STATUS_CATEGORY_OPEN = "OPEN"
+PUSHGATEWAY_ENABLED = os.environ.get('PUSHGATEWAY_ENABLED', 'False').lower() == 'true'
 
 # URL endpoints
 URL_LOGIN = API_HOST + "/api/resources/login"
@@ -420,8 +421,12 @@ def push_metrics_to_pushgateway(metrics, latest_data, registry):
     metrics.daily_usage_cost.set(latest_data.get('cost', 0))
     metrics.daily_max_temperature.set(latest_data.get('max_temperature', 0))
     
-    # Send metrics to pushgateway
-    push_to_gateway(os.getenv('PUSHGATEWAY_ADDRESS', 'localhost:9091'), job='fpl_data_pusher', registry=registry)
+    # Check if we should push metrics to Pushgateway
+    if PUSHGATEWAY_ENABLED:
+        # Send metrics to pushgateway
+        push_to_gateway(os.getenv('PUSHGATEWAY_ADDRESS', 'localhost:9091'), job='fpl_data_pusher', registry=registry)
+    else:
+        _LOGGER.info("Pushing to Prometheus Pushgateway is disabled.")
 
 async def main(username, password):
     async with aiohttp.ClientSession() as session:

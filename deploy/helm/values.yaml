@@ -6,8 +6,10 @@ image:
 # 6:00am UTC every day
 schedule: "0 6 * * *"
 
-env:
-  - name: PUSHGATEWAY_ADDRESS
-    value: "prometheus-push-gateway-prometheus-pushgateway.monitoring.svc.cluster.local:9091"
+pushgateway:
+  enabled: false
+  address: "prometheus-push-gateway-prometheus-pushgateway.monitoring.svc.cluster.local:9091"
+
+env: []
 
 resources: {}
